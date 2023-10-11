@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_food_warehouse/core/constants/constants.dart';
 import 'package:sqflite_food_warehouse/core/models/product_model.dart';
 import 'package:sqflite_food_warehouse/screens/details_screen/alerts/update_product_alert/update_product_alert.dart';
+import 'package:sqflite_food_warehouse/screens/details_screen/widgets/table_data.dart';
 
 class DetailsPage extends StatelessWidget {
   const DetailsPage({
@@ -32,7 +33,7 @@ class DetailsPage extends StatelessWidget {
             width: double.infinity,
             child: Image.network(
               product.imagePath,
-              fit: BoxFit.fill,
+              fit: BoxFit.contain,
               height: 250,
             ),
           ),
@@ -48,40 +49,11 @@ class DetailsPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "цена",
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          height: InsetsConstants.small,
-                        ),
-                        Text(
-                          "количество",
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
-                      ],
-                    ),
+                    const TableData(firstElement: "цена", secondELement: "количество"),
                     const SizedBox(
                       width: InsetsConstants.large,
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "${product.price}",
-                          style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: InsetsConstants.small,
-                        ),
-                        Text(
-                          "${product.count}",
-                          style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    )
+                    TableData(firstElement: "${product.price} тг", secondELement: "${product.count} шт"),
                   ],
                 ),
                 const SizedBox(
@@ -109,3 +81,5 @@ class DetailsPage extends StatelessWidget {
     );
   }
 }
+
+

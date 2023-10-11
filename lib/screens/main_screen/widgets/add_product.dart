@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:sqflite_food_warehouse/core/models/product_model.dart';
-import 'package:sqflite_food_warehouse/screens/main_screen/bloc/product_bloc.dart';
+import 'package:sqflite_food_warehouse/screens/main_screen/bloc/main_bloc.dart';
 
 class AddProduct extends StatelessWidget {
   final TextEditingController titleController = TextEditingController();
@@ -15,7 +15,7 @@ class AddProduct extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  void _addProduct(BuildContext context, ProductBloc bloc) {
+  void _addProduct(BuildContext context, MainScreenBloc bloc) {
     if (_formKey.currentState!.validate()) {
       final newProduct = ProductModel(
         title: titleController.text,
@@ -35,7 +35,7 @@ class AddProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<ProductBloc>(context);
+    final bloc = BlocProvider.of<MainScreenBloc>(context);
 
     return Scaffold(
       appBar: AppBar(

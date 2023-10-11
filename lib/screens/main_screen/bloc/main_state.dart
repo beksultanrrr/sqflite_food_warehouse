@@ -1,6 +1,6 @@
 
 
-part of  'product_bloc.dart';
+part of  'main_bloc.dart';
 
 enum ProductStatus { initial, loading, success, failure }
 

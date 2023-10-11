@@ -14,10 +14,8 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
   Future<void> _initialStatisticsEvent(InitialStatisticsEvent event, Emitter<StatisticsState> emit) async {
     final price = await DatabaseService.instance.getPrice();
      final count = await DatabaseService.instance.getCount();
-    
-
     emit(state.copyWith(countProduct: count, priceProduct: price, status: StatisticsStatus.initial));
-    print("zxszxzxzxzx $count");
+  
   }
 
   // Future<void> _deleteProduct(DeleteProduct event, Emitter<ProductState> emit) async {

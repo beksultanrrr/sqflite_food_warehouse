@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite_food_warehouse/screens/main_screen/widgets/add_product.dart';
-import 'package:sqflite_food_warehouse/screens/main_screen/bloc/product_bloc.dart';
+import 'package:sqflite_food_warehouse/screens/main_screen/bloc/main_bloc.dart';
 import 'package:sqflite_food_warehouse/screens/main_screen/widgets/product_item.dart';
 import 'package:sqflite_food_warehouse/screens/statistics_screen/bloc/statistics_bloc.dart';
 import 'package:sqflite_food_warehouse/screens/statistics_screen/statistics.dart';
 
-class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _MainScreenState extends State<MainScreen> {
   final TextEditingController _searchController = TextEditingController();
   Future<void> _showModalBottomSheet(BuildContext context) {
     return showModalBottomSheet<void>(
@@ -36,7 +36,7 @@ class _ProductScreenState extends State<ProductScreen> {
         appBar: AppBar(
           title: const Text('Product List'),
         ),
-        body: BlocBuilder<ProductBloc, ProductState>(
+        body: BlocBuilder<MainScreenBloc, ProductState>(
           builder: (context, state) {
             if (state.isLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -55,7 +55,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         prefixIcon: Icon(Icons.search),
                       ),
                       onChanged: (query) {
-                        context.read<ProductBloc>().add(SearchProductsEvent(query));
+                        context.read<MainScreenBloc>().add(SearchProductsEvent(query));
                         print(query);
                       },
                     ),
@@ -64,9 +64,9 @@ class _ProductScreenState extends State<ProductScreen> {
                       icon: const Icon(Icons.sort),
                       onSelected: (value) {
                         if (value == "item1") {
-                          context.read<ProductBloc>().add(OrderByDate());
+                          context.read<MainScreenBloc>().add(OrderByDate());
                         } else {
-                          context.read<ProductBloc>().add(OrderByPrice());
+                          context.read<MainScreenBloc>().add(OrderByPrice());
                         }
                       },
                       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[

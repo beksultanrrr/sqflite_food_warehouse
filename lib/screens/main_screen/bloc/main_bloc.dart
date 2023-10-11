@@ -4,12 +4,12 @@ import 'package:sqflite_food_warehouse/core/services/database_service.dart';
 
 import '../../../core/models/product_model.dart';
 
-part 'product_event.dart';
-part 'product_state.dart';
+part 'main_event.dart';
+part 'main_state.dart';
 
-class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  ProductBloc() : super(const ProductState()) {
-    on<InitialProductEvent>(_initialProductEvent);
+class MainScreenBloc extends Bloc<ProductEvent, ProductState> {
+  MainScreenBloc() : super(const ProductState()) {
+    on<InitialProductEvent>(_initialMainScreenEvent);
     on<AddProductEvent>(_addProductEvent);
     on<DeleteProduct>(_deleteProduct);
     on<SearchProductsEvent>(_searchProductsEvent);
@@ -18,7 +18,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<UpdateProductEvent>(_updateProductEvent);
   }
 
-  Future<void> _initialProductEvent(InitialProductEvent event, Emitter<ProductState> emit) async {
+  Future<void> _initialMainScreenEvent(InitialProductEvent event, Emitter<ProductState> emit) async {
     try {
       final List<ProductModel> products = await DatabaseService.instance.readAllProduct();
       emit(state.copyWith(products: products, status: ProductStatus.success));
@@ -71,12 +71,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(state.copyWith(products: List.of(state.products).reversed.toList()));
   }
 
- Future<void> _orderByPrice(OrderByPrice event, Emitter<ProductState> emit) async {
-  // Создайте копию списка продуктов и отсортируйте его по цене
-  final sortedProducts = List.of(state.products)
-    ..sort((a, b) => a.price.compareTo(b.price));
+  Future<void> _orderByPrice(OrderByPrice event, Emitter<ProductState> emit) async {
+    // Создайте копию списка продуктов и отсортируйте его по цене
+    final sortedProducts = List.of(state.products)..sort((a, b) => a.price.compareTo(b.price));
 
-  // Обновите состояние с отсортированным списком
-  emit(state.copyWith(products: sortedProducts));
-}
+    // Обновите состояние с отсортированным списком
+    emit(state.copyWith(products: sortedProducts));
+  }
 }

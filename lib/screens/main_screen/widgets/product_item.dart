@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:sqflite_food_warehouse/screens/main_screen/bloc/product_bloc.dart';
+import 'package:sqflite_food_warehouse/screens/main_screen/bloc/main_bloc.dart';
 
 import '../../../core/models/product_model.dart';
 import '../details_screen.dart';
@@ -15,7 +15,7 @@ class ProductItem extends StatelessWidget {
   final ProductModel products;
 
   void _deleteProduct(BuildContext context) {
-    context.read<ProductBloc>().add(DeleteProduct(products.id!));
+    context.read<MainScreenBloc>().add(DeleteProduct(products.id!));
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       duration: Duration(milliseconds: 500),
       content: Text("deleted product"),
@@ -23,14 +23,14 @@ class ProductItem extends StatelessWidget {
   }
 
   void _toDetailsScreen(BuildContext context) {
-    final bloc = context.read<ProductBloc>();
+    final bloc = context.read<MainScreenBloc>();
     Navigator.push(
         context,
         DetailsScreen.route(products, onUpdate: (product) {
           bloc.add(UpdateProductEvent(product));
         })).then((value) {
       if (value is bool && value == false) {
-        context.read<ProductBloc>().add(DeleteProduct(products.id!));
+        context.read<MainScreenBloc>().add(DeleteProduct(products.id!));
       }
     });
   }
